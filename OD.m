@@ -2,17 +2,31 @@ function OD_est_value=OD(M,ts,D,lag,wi)
 
 % ------------------------------------------------------------------------
 % Input:
-%         M:   number of multiple times series;
-%         ts:  array of time series (time series can have different lengths L);
-%         wl:  order or embedding dimension (it should be the same for all time series);
-%         lag: vector of lags or embedding delay for the ordinal symbolization, e.g. [1,1,1] if M=3;
-%         wi:  vector of weights for the generalized Jensen-Shannon divergence, e.g. [1/3,1/3,1/3] if M=3;
+%          M:   number of multiple times series;
+%          ts:  array of time series (time series can have different lengths L);
+%          wl:  order or embedding dimension (it should be the same for all time series);
+%          lag: vector of lags or embedding delay for the ordinal symbolization, e.g. [1,1,1] if M=3;
+%          wi:  vector of weights for the generalized Jensen-Shannon divergence, e.g. [1/3,1/3,1/3] if M=3;
 % Output:
-%         OD_est_value: ordinal diversity estimated value
-% Example:
-%         OD_randn=OD(100,num2cell(randn(10000,100),1),4,ones(100,1)',1/100*ones(100,1)')
-%         OD estimated for M=100 normal white noises of length L=10^4 data points with order D=4, lags 
-%         equal to 1 and weights equal to 1/M for all time series. 
+%          OD_est_value: ordinal diversity estimated value
+% Examples:
+%          Example 1. OD estimated for M=100 normal white noises of length L=10^4 data points with order 
+%          D=4, lags equal to 1 and weights equal to 1/100 for all time series:
+%
+%          OD_randn=OD(100,num2cell(randn(10000,100),1),4,ones(100,1)',1/100*ones(100,1)');
+%
+%          Example 2. OD estimated for M=9 simulations of fBms with Hurst exponents 0.1,0.2,...,0.9
+%          (by using the MATLAB wfbm code) of length L=10^4 data points with order D=3, lags equal to 1 
+%          and weights equal to 1/9 for all time series:
+%
+%          fBm=cell(9,1);
+%          H=[0.1:0.1:0.9]';
+%          for i=1:1:9;
+%          fBm{i}=wfbm(H(i,1),10^4)';
+%          end;
+%          OD_fBm=OD(9,fBm,3,ones(9,1)',1/9*ones(9,1)');
+%          clear fBm;
+%          
 % ------------------------------------------------------------------------
 % Reference:
 % If you use this algorithm please cite the following article:
